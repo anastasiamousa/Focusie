@@ -12,10 +12,26 @@ struct FocusView: View {
     @StateObject private var viewModel = FocusViewModel()
     
     var body: some View {
+        ZStack {
+            Color("Background")
+                .ignoresSafeArea()
+            
+            Image("PaperTexture")
+                .resizable()
+                .scaledToFill()
+                .opacity(0.15)
+                .ignoresSafeArea()
+            
+            mainContent
+        }
+    }
+    
+    private var mainContent: some View {
         VStack(spacing: 40) {
             
             Text("Focusie")
                 .font(FocusieFont.semiBold(size: 28))
+                .foregroundColor(Color("PrimaryText"))
             
             ZStack {
                 FocusProgressRing(progress: progress)
@@ -24,6 +40,8 @@ struct FocusView: View {
                 Text(TimeFormatter.format(seconds: viewModel.state.remainingSeconds))
                     .font(FocusieFont.medium(size: 56))
                     .monospacedDigit()
+                    .foregroundColor(Color("PrimaryText"))
+                    .padding(24)
             }
             
             VStack(spacing: 16) {
@@ -36,11 +54,13 @@ struct FocusView: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(Color("Accent"))
                 
                 Button("Reset") {
                     viewModel.send(action: .resetTapped)
                 }
                 .buttonStyle(.bordered)
+                .tint(Color("Accent"))
             }
         }
         .padding()
@@ -49,7 +69,6 @@ struct FocusView: View {
     private var progress: Double {
         let total = Double(viewModel.state.totalSeconds)
         let remaining = Double(viewModel.state.remainingSeconds)
-        
         return 1 - (remaining / total)
     }
 }
