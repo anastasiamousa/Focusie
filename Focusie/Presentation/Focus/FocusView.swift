@@ -53,17 +53,24 @@ struct FocusView: View {
                         viewModel.send(action: .startTapped)
                     }
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(Color("Accent"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 18)
+                .background(Color("Accent"))
+                .foregroundColor(.white)
+                .cornerRadius(20)
+                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
                 
                 Button("Reset") {
                     viewModel.send(action: .resetTapped)
                 }
-                .buttonStyle(.bordered)
-                .tint(Color("Accent"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(Color("Accent").opacity(0.4))
+                .foregroundColor(Color("PrimaryText"))
+                .cornerRadius(20)
             }
         }
-        .padding()
+        .padding(.horizontal, 24)
     }
     
     private var progress: Double {
