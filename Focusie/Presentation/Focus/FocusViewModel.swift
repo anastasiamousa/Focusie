@@ -24,6 +24,8 @@ final class FocusViewModel: ObservableObject {
             resetTimer()
         case .timeSecPassed:
             handleTimeSecs()
+        case .setDuration(let seconds):
+            setDuration(seconds)
         }
     }
 }
@@ -58,5 +60,15 @@ private extension FocusViewModel {
         if state.remainingSeconds == 0 {
             pauseTimer()
         }
+    }
+    
+    func setDuration(_ seconds: Int) {
+        // Clamp to a sensible minimum to avoid zero/negative durations
+        let clamped = max(0, seconds)
+        // If the timer is running, pause before changing duration
+        if state.isRunning { pauseTimer() }
+        state.totalSeconds = clamped
+        // Reset remaining to the new total
+        state.remainingSeconds = clamped
     }
 }

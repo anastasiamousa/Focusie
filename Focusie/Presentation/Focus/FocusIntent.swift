@@ -12,4 +12,5 @@ enum FocusIntent {
     case pauseTapped
     case resetTapped
     case timeSecPassed
+    case setDuration(Int)
 }
